@@ -1,3 +1,5 @@
 {
-  "server": "http:/localhost:3000/"
+  "index": "http://localhost:3000/",
+  "signup": "http://localhost:3000/signup",
+  "posts": "http://localhost:3000/posts"
 }

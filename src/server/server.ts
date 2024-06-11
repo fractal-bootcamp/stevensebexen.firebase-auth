@@ -1,10 +1,6 @@
-import admin from 'firebase-admin'
 import express, { NextFunction, Request, Response } from 'express';
 import signupHandler from './signupHandler';
-
-admin.initializeApp({
-  credential: admin.credential.cert(process.env.SERVICE_ACCOUNT_PATH || '')
-});
+import postsHandler from './postsHandler';
 
 const expressApp = express();
 const PORT = 3000;
@@ -18,6 +14,8 @@ const cors = (_: Request, res: Response, next: NextFunction) => {
 
 expressApp.use(express.json());
 expressApp.use(cors);
+
+expressApp.get('/posts', postsHandler);
 
 expressApp.post('/signup', signupHandler);
 

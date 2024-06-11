@@ -17,4 +17,15 @@ model User {
   id Int @unique @default(autoincrement())
   firebaseId String @unique
   email String
+
+  posts Post[]
+}
+
+model Post {
+  id Int @unique @default(autoincrement())
+  userId Int
+  content String
+  timestamp DateTime
+
+  user User @relation(fields: [userId], references: [id])
 }
