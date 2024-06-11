@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useState } from 'react';
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
+import fbConfig from '~/client/firebaseConfig';
 
 enum Mode {
   NONE,
@@ -8,15 +9,7 @@ enum Mode {
   SIGNUP
 }
 
-function logIn(email: string, password: string) {
-  console.log(`Log in with user '${email}' and password '${password}'`);
-}
-
-function signUp(email: string, password: string) {
-  console.log(`Sign up with user '${email}' and password '${password}'`);
-}
-
-function LoginRoot() {
+function LoginComponent() {
   const [mode, setMode] = useState<Mode>(Mode.NONE);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -24,13 +17,13 @@ function LoginRoot() {
   return (
     <div className='flex m-auto flex-col w-1/2 gap-2'>
       <div className='flex flex-row flex-1 justify-between gap-2'>
-        <p className='text-violet-600 hover:cursor-pointer flex-1 text-center'
-          style={{ backgroundColor: mode === Mode.LOGIN ? '#d6ced9' : '#ffffff' }}
+        <p className='text-violet-700 hover:cursor-pointer flex-1 text-center'
+          style={{ backgroundColor: mode === Mode.LOGIN ? '#eddaf5' : '#ffffff' }}
           onClick={() => setMode(Mode.LOGIN)}>
             Log In
         </p>
-        <p className='text-violet-600 hover:cursor-pointer flex-1 text-center'
-          style={{ backgroundColor: mode === Mode.SIGNUP ? '#d6ced9' : '#ffffff' }}
+        <p className='text-violet-700 hover:cursor-pointer flex-1 text-center'
+          style={{ backgroundColor: mode === Mode.SIGNUP ? '#eddaf5' : '#ffffff' }}
           onClick={() => setMode(Mode.SIGNUP)}>
             Sign Up
         </p>
@@ -39,17 +32,17 @@ function LoginRoot() {
         ? <LoginForm
           onEmailInputChange={newValue => setEmail(newValue)}
           onPasswordInputChange={newValue => setPassword(newValue)}
-          onSubmit={() => logIn(email, password)}
           email={email}
           password={password}
+          auth={fbConfig.auth}
         />
         : mode === Mode.SIGNUP
         ? <SignupForm
           onEmailInputChange={newValue => setEmail(newValue)}
           onPasswordInputChange={newValue => setPassword(newValue)}
-          onSubmit={() =>signUp(email, password)}
           email={email}
           password={password}
+          auth={fbConfig.auth}
         />
         : <></>
       }
@@ -57,4 +50,4 @@ function LoginRoot() {
   )
 }
 
-export default LoginRoot
+export default LoginComponent
