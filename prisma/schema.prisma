@@ -17,6 +17,4 @@ model User {
   id Int @unique @default(autoincrement())
   firebaseId String @unique
   email String
-  password String
-  name String @default("Mysterious Dragon")
 }

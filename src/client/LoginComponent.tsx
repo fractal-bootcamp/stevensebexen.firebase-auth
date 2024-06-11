@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
-import axios from 'axios';
-
-const SERVER_URL = 'http://localhost:3000'; // Where can I put this?
+import fbConfig from '~/client/firebaseConfig';
 
 enum Mode {
   NONE,
@@ -11,17 +9,7 @@ enum Mode {
   SIGNUP
 }
 
-async function logIn(email: string, password: string) {
-  const loginResult = await axios.post(`${SERVER_URL}/login`, { email, password });
-  console.log(loginResult);
-}
-
-async function signUp(email: string, password: string) {
-  const signupResult = await axios.post(`${SERVER_URL}/signup`, { email, password });
-  console.log(signupResult);
-}
-
-function LoginRoot() {
+function LoginComponent() {
   const [mode, setMode] = useState<Mode>(Mode.NONE);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -44,17 +32,17 @@ function LoginRoot() {
         ? <LoginForm
           onEmailInputChange={newValue => setEmail(newValue)}
           onPasswordInputChange={newValue => setPassword(newValue)}
-          onSubmit={() => logIn(email, password)}
           email={email}
           password={password}
+          auth={fbConfig.auth}
         />
         : mode === Mode.SIGNUP
         ? <SignupForm
           onEmailInputChange={newValue => setEmail(newValue)}
           onPasswordInputChange={newValue => setPassword(newValue)}
-          onSubmit={() =>signUp(email, password)}
           email={email}
           password={password}
+          auth={fbConfig.auth}
         />
         : <></>
       }
@@ -62,4 +50,4 @@ function LoginRoot() {
   )
 }
 
-export default LoginRoot
+export default LoginComponent
