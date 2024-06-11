@@ -27,7 +27,7 @@ function SignupForm(props: SignupFormProps) {
         className='flex-1 basis-1/5 rounded-md border border-indigo-900'
         onClick={() => props.onSubmit()}
       >
-        Log in
+        Sign up
       </button>
     </div>
   )
