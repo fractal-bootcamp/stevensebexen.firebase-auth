@@ -1,22 +1,16 @@
-import { getAuth as aGetAuth } from "firebase-admin/auth";
+import { User } from '@prisma/client';
 import prismaClient from "./prismaClient";
 
-export async function createUser(email: string, password: string): Promise<boolean> {
+export async function createUser(email: string, firebaseId: string): Promise<User> {
   email = email.toLowerCase();
-
-  const resultFirebaseCreateUser = await aGetAuth().createUser({
-    email,
-    password
-  });
-  console.log('Firebase user created', resultFirebaseCreateUser);
   
-  const resultPrismaCreateUser = await prismaClient.user.create({
+  const result = await prismaClient.user.create({
     data: {
       email,
-      firebaseId: resultFirebaseCreateUser.uid
+      firebaseId: firebaseId
     }
   });
-  console.log('Prisma user created', resultPrismaCreateUser);
+  console.log('Prisma user created', result);
 
-  return true;
+  return result;
 }

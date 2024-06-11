@@ -1,5 +1,7 @@
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-firebase-hooks/auth"
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import { Auth } from 'firebase/auth';
+import axios from "axios";
+import routes from '~/routes.json';
 
 interface SignupFormProps {
   onEmailInputChange: (newValue: string) => void
@@ -11,7 +13,6 @@ interface SignupFormProps {
 
 function SignupForm(props: SignupFormProps) {
   const [signUp, _, loading] = useCreateUserWithEmailAndPassword(props.auth);
-  const [updateProfile] = useUpdateProfile(props.auth);
   
   return (
     <div className='flex flex-row flex-1 justify-between gap-4'>
@@ -31,7 +32,11 @@ function SignupForm(props: SignupFormProps) {
       />
       <button
         className='flex-1 basis-24 rounded-md border border-indigo-900 disabled:text-purple-300'
-        onClick={() => signUp(props.email, props.password)}
+        onClick={() => { 
+          // TODO: Error handling when server fails
+          signUp(props.email, props.password)
+            .then(result => axios.post(routes.signup, { email: props.email, firebaseId: result?.user.uid }))
+          }}
         disabled={loading}
       >
         Sign up
