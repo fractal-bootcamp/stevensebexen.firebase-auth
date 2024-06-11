@@ -1,10 +1,12 @@
-import './App.css';
+import LoginRoot from './LoginRoot';
+import './index.css';
 
 function App() {
 
   return (
     <>
       <p>Dragons.</p>
+      <LoginRoot />
     </>
   )
 }
