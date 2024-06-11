@@ -1,6 +1,9 @@
-import { useState } from "react"
+import { useState } from 'react';
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
+import axios from 'axios';
+
+const SERVER_URL = 'http://localhost:3000'; // Where can I put this?
 
 enum Mode {
   NONE,
@@ -8,12 +11,14 @@ enum Mode {
   SIGNUP
 }
 
-function logIn(email: string, password: string) {
-  console.log(`Log in with user '${email}' and password '${password}'`);
+async function logIn(email: string, password: string) {
+  const loginResult = await axios.post(`${SERVER_URL}/login`, { email, password });
+  console.log(loginResult);
 }
 
-function signUp(email: string, password: string) {
-  console.log(`Sign up with user '${email}' and password '${password}'`);
+async function signUp(email: string, password: string) {
+  const signupResult = await axios.post(`${SERVER_URL}/signup`, { email, password });
+  console.log(signupResult);
 }
 
 function LoginRoot() {
@@ -24,13 +29,13 @@ function LoginRoot() {
   return (
     <div className='flex m-auto flex-col w-1/2 gap-2'>
       <div className='flex flex-row flex-1 justify-between gap-2'>
-        <p className='text-violet-600 hover:cursor-pointer flex-1 text-center'
-          style={{ backgroundColor: mode === Mode.LOGIN ? '#d6ced9' : '#ffffff' }}
+        <p className='text-violet-700 hover:cursor-pointer flex-1 text-center'
+          style={{ backgroundColor: mode === Mode.LOGIN ? '#eddaf5' : '#ffffff' }}
           onClick={() => setMode(Mode.LOGIN)}>
             Log In
         </p>
-        <p className='text-violet-600 hover:cursor-pointer flex-1 text-center'
-          style={{ backgroundColor: mode === Mode.SIGNUP ? '#d6ced9' : '#ffffff' }}
+        <p className='text-violet-700 hover:cursor-pointer flex-1 text-center'
+          style={{ backgroundColor: mode === Mode.SIGNUP ? '#eddaf5' : '#ffffff' }}
           onClick={() => setMode(Mode.SIGNUP)}>
             Sign Up
         </p>
