@@ -1,4 +1,4 @@
-import admin, { ServiceAccount } from 'firebase-admin'
+import admin from 'firebase-admin'
 import express, { NextFunction, Request, Response } from 'express';
 import loginHandler from './loginHandler';
 import signupHandler from './signupHandler';
