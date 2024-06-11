@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { getAuth } from "firebase-admin/auth";
+import prismaClient from "./prismaClient";
 
 interface SignupFormData {
   email: string
@@ -8,11 +9,13 @@ interface SignupFormData {
 
 async function signupHandler(req: Request, res: Response) {
   const formData = req.body as SignupFormData;
-  const newUser = await getAuth().createUser({
+  const resultFirebaseCreateUser = await getAuth().createUser({
     email: formData.email,
     password: formData.password
   });
-  console.log(newUser);
+  console.log(resultFirebaseCreateUser);
+
+  const resultPrismaCreateUser = await prismaClient
 }
 
 export default signupHandler;
